@@ -81,6 +81,7 @@ test:
 #
 production:
   <<: *default
-  database: backend_production
-  username: backend
+  database: job_6piu
+  username: job_6piu_user
   password: <%= ENV['BACKEND_DATABASE_PASSWORD'] %>
+  url: postgres://job_6piu_user:sKBBTmBSHzyqjU5TALnqcwIF9gZaQUTh@dpg-cp8a9re74orc73df28ig-a/job_6piu
