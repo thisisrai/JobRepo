@@ -81,7 +81,7 @@ test:
 #
 production:
   <<: *default
-  database: job_b3gk
-  username: job_b3gk_user
+  database: jobsearch_wex9
+  username: jobsearch_wex9_user
   password: <%= ENV['BACKEND_DATABASE_PASSWORD'] %>
-  url: postgresql://job_b3gk_user:ToJPXgpPkXpJ7CL2M5z623zCz2do2yeV@dpg-cps566qj1k6c738hqc8g-a/job_b3gk
+  url: postgresql://jobsearch_wex9_user:R3XVxMAiF37yXdODXnI6yvUKidRDvrFr@dpg-cqm0jolds78s73asgo10-a.oregon-postgres.render.com/jobsearch_wex9
