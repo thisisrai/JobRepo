@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
     if @user.valid?
       token = encode_token({user_id: @user.id})
-      UserMailer.welcome_email(@user).deliver_now
+      UserMailer.welcome_email(@user).deliver_later
       render json: {user: @user, token: token}
     else
       render json: {error: "Error signing up, username is taken"}
