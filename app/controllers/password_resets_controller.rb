@@ -1,4 +1,5 @@
 class PasswordResetsController < ApplicationController
+  skip_before_action :authorized
   # POST /password_resets
   def create
     user = User.find_by(username: params[:username])
