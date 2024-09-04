@@ -5,7 +5,7 @@ class PasswordResetsController < ApplicationController
     @user = User.find_by(username: params[:username])
 
     if @user
-      user.generate_password_reset_token! # Custom method on User model to generate token
+      @user.generate_password_reset_token! # Custom method on User model to generate token
       PasswordResetMailer.reset_email(@user).deliver_later
       render json: { message: 'Password reset email will be sent shortly.' }, status: :ok
     else
