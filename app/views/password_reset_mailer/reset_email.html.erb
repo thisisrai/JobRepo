@@ -1,0 +1,5 @@
+<h1>Password Reset Instructions</h1>
+<p>Hi <%= @user.username %>,</p>
+<p>To reset your password, please click the link below:</p>
+<p><%= link_to 'Reset Password', @reset_url %></p>
+<p>This link will expire in 2 hours.</p>
