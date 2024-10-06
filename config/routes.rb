@@ -11,4 +11,8 @@ Rails.application.routes.draw do
 
   # Route for resetting the password using the token
   put 'password_resets/:token', to: 'password_resets#update', as: 'password_reset'
+
+  # Route for stories
+  get '/stories', to: "stories#index"
+  post '/stories', to: "stories#create"
 end

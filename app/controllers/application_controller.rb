@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
   before_action :authorized
 
   def encode_token(payload)
-    JWT.encode(payload, ENV['BACKEND_DATABASE_PASSWORD'])
+    JWT.encode(payload, ENV['BACKEND_DATABASE_PASSWORD'] || 'dev')
   end
 
   def auth_header
@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
     if auth_header
       token = auth_header.split(' ')[1]
       begin
-          JWT.decode(token, ENV['BACKEND_DATABASE_PASSWORD'], true, algorithm: 'HS256')
+          JWT.decode(token, ENV['BACKEND_DATABASE_PASSWORD'] || 'dev', true, algorithm: 'HS256')
       rescue JWT::DecodeError
         nil
       end
