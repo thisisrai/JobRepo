@@ -1,5 +1,5 @@
 class StoriesController < ApplicationController
-  before_action :authorized
+  before_action :authorized, only: [:create]
 
   # GET /stories
   def index
