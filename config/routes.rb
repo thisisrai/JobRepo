@@ -15,4 +15,10 @@ Rails.application.routes.draw do
   # Route for stories
   get '/stories', to: "stories#index"
   post '/stories', to: "stories#create"
+
+  resources :openings do
+    collection do
+      get 'paginated', to: 'openings#paginated_openings'
+    end
+  end
 end
