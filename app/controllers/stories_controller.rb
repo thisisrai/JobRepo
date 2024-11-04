@@ -3,7 +3,7 @@ class StoriesController < ApplicationController
 
   # GET /stories
   def index
-    @stories = Story.all
+    @stories = Story.order(created_at: :desc).limit(10)
     render json: @stories, status: :ok
   end
 
