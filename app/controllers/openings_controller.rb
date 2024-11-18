@@ -8,8 +8,23 @@ class OpeningsController < ApplicationController
     openings = openings.where('location ILIKE ?', "%#{params[:location]}%") if params[:location].present?
     openings = openings.where('title ILIKE ?', "%#{params[:title]}%") if params[:title].present?
 
+    if params[:company].present?
+      openings = openings.where(company: params[:company])
+      total_count = openings.count
+    else
+      latest_openings = Opening
+        .select("DISTINCT ON (company) *")
+        .order("company, posted_on DESC") # Ensures DISTINCT ON works correctly
+
+      ordered_openings = Opening
+        .from(latest_openings, :openings)
+        .order(posted_on: :desc) # Final ordering based on posted_on
+
+      total_count = ordered_openings.size
+      openings = ordered_openings
+    end
+
     # Get total count before pagination
-    total_count = openings.count
 
     # Apply pagination after filtering
     paginated_openings = openings.page(page).per(per_page)
