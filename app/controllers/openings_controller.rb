@@ -13,6 +13,7 @@ class OpeningsController < ApplicationController
       total_count = openings.count
     else
       latest_openings = Opening
+        .from(openings, :openings)
         .select("DISTINCT ON (company) *")
         .order("company, posted_on DESC") # Ensures DISTINCT ON works correctly
 
