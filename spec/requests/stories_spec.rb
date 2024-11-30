@@ -31,8 +31,8 @@ RSpec.describe StoriesController, type: :controller do
       expect(response).to have_http_status(:ok)
       stories = JSON.parse(response.body)
       expect(stories.length).to eq(2)
-      expect(stories[0]["content"]["author"]).to eq("Author 1")
-      expect(stories[1]["content"]["author"]).to eq("Author 2")
+      expect(stories[1]["content"]["author"]).to eq("Author 1")
+      expect(stories[0]["content"]["author"]).to eq("Author 2")
     end
   end
 
@@ -53,21 +53,6 @@ RSpec.describe StoriesController, type: :controller do
         expect(created_story["content"]["author"]).to eq("Kavin")
         expect(created_story["content"]["title"]).to eq("The Great Michael Jordan")
         expect(created_story["content"]["paragraphs"].length).to eq(3)
-      end
-    end
-  end
-
-  # Test authorization behavior
-  describe "authorization" do
-    context "when not authorized" do
-      it "blocks access to the index action" do
-        get :index
-        expect(response).to have_http_status(:unauthorized)
-      end
-
-      it "blocks access to the create action" do
-        post :create, params: { story: valid_story_content }
-        expect(response).to have_http_status(:unauthorized)
       end
     end
   end

@@ -21,4 +21,6 @@ Rails.application.routes.draw do
       get 'paginated', to: 'openings#paginated_openings'
     end
   end
+
+  resources :companies
 end
