@@ -23,4 +23,6 @@ Rails.application.routes.draw do
   end
 
   resources :companies
+
+  get 'integration', to: 'integration#find_company'
 end
