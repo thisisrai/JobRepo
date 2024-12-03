@@ -1,4 +1,6 @@
 class IntegrationController < ApplicationController
+  skip_before_action :authorized
+
   require 'net/http'
   require 'json'
 
