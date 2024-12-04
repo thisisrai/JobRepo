@@ -24,7 +24,11 @@ class IntegrationController < ApplicationController
     company = Company.find_by("LOWER(name) = ?", company_param.downcase)
 
     if company
-      render json: { status: 'found', company: company }, status: :ok
+      if company.working
+        render json: { status: 'found', company: company }, status: :ok
+      else
+        render json: { status: 'not found'}, status: :not_found
+      end
     else
       # If not found, make API requests to Greenhouse, Ashby, and Lever
       found = false
@@ -36,6 +40,7 @@ class IntegrationController < ApplicationController
       if found
         render json: { status: 'found' }, status: :ok
       else
+        Company.create(name: company_param, job_board: 'unknown', working: false)
         render json: { status: 'not found' }, status: :not_found
       end
     end
@@ -50,7 +55,7 @@ class IntegrationController < ApplicationController
     if response.is_a?(Net::HTTPSuccess)
       data = JSON.parse(response.body)
       if data['jobs'].any?
-        Company.create(name: company_param, job_board: 'greenhouse')
+        Company.create(name: company_param, job_board: 'greenhouse', working: true)
         return true
       end
     end
@@ -64,7 +69,7 @@ class IntegrationController < ApplicationController
     if response.is_a?(Net::HTTPSuccess)
       data = JSON.parse(response.body)
       if data['jobs'].any?
-        Company.create(name: company_param, job_board: 'ashby')
+        Company.create(name: company_param, job_board: 'ashby', working: true)
         return true
       end
     end
@@ -78,7 +83,7 @@ class IntegrationController < ApplicationController
     if response.is_a?(Net::HTTPSuccess)
       data = JSON.parse(response.body)
       if data.any?
-        Company.create(name: company_param, job_board: 'lever')
+        Company.create(name: company_param, job_board: 'lever', working: true)
         return true
       end
     end
