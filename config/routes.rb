@@ -25,4 +25,5 @@ Rails.application.routes.draw do
   resources :companies
 
   get 'integration', to: 'integration#find_company'
+  post 'integration', to: 'integration#request_to_integrate'
 end

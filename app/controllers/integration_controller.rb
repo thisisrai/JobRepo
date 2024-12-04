@@ -4,6 +4,18 @@ class IntegrationController < ApplicationController
   require 'net/http'
   require 'json'
 
+  def request_to_integrate
+    email = params[:email]
+    message = params[:message]
+
+    # Send the email using the IntegrationMailer
+    IntegrationMailer.request_integration(email, message).deliver_now
+
+    render json: { status: 'success', message: 'Your request has been submitted successfully!' }, status: :ok
+  rescue StandardError => e
+    render json: { status: 'error', message: e.message }, status: :unprocessable_entity
+  end
+
   def find_company
     # Get the company parameter from the request
     company_param = params[:company].to_s.strip.gsub(/\s+/, '') # Trim and remove spaces between characters
