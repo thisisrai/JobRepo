@@ -5,8 +5,16 @@ class OpeningsController < ApplicationController
 
     # Start with filtering based on location and title (case-insensitive)
     openings = Opening.order(posted_on: :desc)
-    openings = openings.where('location ILIKE ?', "%#{params[:location]}%") if params[:location].present?
-    openings = openings.where('title ILIKE ?', "%#{params[:title]}%") if params[:title].present?
+
+    # Fuzzy search for location
+    if params[:location].present?
+      openings = openings.where('location % ?', params[:location])
+    end
+
+    # Fuzzy search for title
+    if params[:title].present?
+      openings = openings.where('title % ?', params[:title])
+    end
 
     if params[:company].present?
       openings = openings.where(company: params[:company])
